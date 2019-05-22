@@ -49,13 +49,31 @@ static void vCompetingIntMathTask2(void *pvParams)
     volatile TestLogger_t *logger = (volatile TestLogger_t *) pvParams;
     // note that pvPortMalloc can be called only in privileged task. In unprivileged
     // task the array is internally declared, instead of using pvPortMalloc(), GCC
-    // compiler should allocate space, from the allocated stack, for this internal
-    // array. 
-    //// int32_t *larray = (int32_t *) pvPortMalloc( sizeof(int32_t) * TEST_ARRAY_LENGTH );
+    // compiler should assign from the allocated stack for the internal array. 
     portINT   larray[TEST_ARRAY_LENGTH] ;
-    // Then we access the array by the pointer, in order to prevent compiler from
-    // generating LOAD/STORE instruction, which the "base address" is out of the
-    // stack region. [TODO] give an example & complete the scenario.
+    // Then we access the array by the pointer, in order to prevent some compilers from
+    // producing base address (of memory access instructions) going out of the defined 
+    // stack region, MPU (for some CPUs) might treat this as invalid access.
+    // 
+    // e.g. 
+    // The stack region (the address range: 0x300 - 0x400) is assigned to an unprivileged
+    // task, some compilers might generate instruction sequence like following :
+    //
+    //     add  r4, r5, #0x80
+    //     ldr  r0, [r4, #-0x38]
+    //     ......
+    //
+    // where r5 is 0x384 (or greater than 0x384).
+    // r4 will be 0x404 and immediately fed to the "base address" of next load instruction,
+    // the actual address to memory location will be 0x404 - 0x78 = 0x3cc , which is lesser
+    // than the upper bound of allocated stack space (0x400 in this case) , therefore this
+    // load access should be completed without any problem.
+    // However in some CPU implementation, after MPU is enabled and CPU comes to the load 
+    // instruction, it only checks boundary of the "base address" before accessing the memory
+    // (in this case, CPU might only check 0x404 and find it greater than 0x400, therefore
+    //  the CPU generates memory-related fault, regardless of the negative constant immediately
+    //  after the base address)
+    //  
     portINT  *larrayp = &larray;
     for(idx=0; idx<TEST_ARRAY_LENGTH; idx++) {
         *(larrayp + idx) = (idx + 1) * 3;
@@ -98,8 +116,11 @@ void vStartIntegerMathTasks( UBaseType_t uxPriority )
     portSHORT     idx;
     portSHORT     jdx;
 
+    // allocate stack memory for each task
+    // Note that for some CPU implementation, you must meet the requirement while applying MPU
+    // to limit unprivileged memory accesses, such as max/min size restriction, address alingment
+    // ...... etc.
     for(idx=0; idx<NUM_OF_TASKS; idx++) {
-        // allocate stack memory for each task
         stackMemSpace[idx] = (StackType_t *) pvPortMalloc(sizeof(StackType_t) * stackSize[idx]);
     }
     for(idx=0; idx<NUM_OF_TASKS; idx++) 

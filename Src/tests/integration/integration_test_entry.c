@@ -263,10 +263,10 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
   /* EXTI interrupt init*/
   // [TODO] 
-  // timer interrupt will cause Hardfault error in SVC exception
-  // we when perform unit test for FreeRTOS port, we will uncommnet
+  // figure out why GPIO external-input interrupt causes Hardfault error
+  // when we perform unit test for FreeRTOS port.
   // following line of code to figure out the problem later.
-  HAL_NVIC_SetPriority(EXTI4_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 0x1, 0);
+  ////HAL_NVIC_SetPriority(EXTI4_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 0x1, 0);
   ////HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 }
 

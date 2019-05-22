@@ -295,7 +295,7 @@ help:
 	@echo " * make INTEGRATION_TEST=yes                          ";
 	@echo "   Build image to run integration tests.              ";
 	@echo "                                                      ";
-	@echo " * make dbg_server                                    ";
+	@echo " * make dbg_server OPENOCD_HOME=/PATH/TO/YOUR_OPENOCD ";
 	@echo "   launch debug server, we use OpenOCD (v0.10.0) here ";
 	@echo "   . Note that superuser permission would be required ";
 	@echo "   when running openOCD, the command differs & depends";

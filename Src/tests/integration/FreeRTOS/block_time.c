@@ -350,8 +350,6 @@ void vStartBlockTimeTasks( UBaseType_t uxPriority )
 
     tlogger[0] = xRegisterNewTestLogger( __FILE__ , "blocking time test -- primary task" );
     tlogger[1] = xRegisterNewTestLogger( __FILE__ , "blocking time test -- secondary task" );
-    // [TODO] recheck address alignment of allocated stack memory.
-    // allocate stack memory for each task
     stackMemSpace[0] = (StackType_t *) pvPortMalloc(sizeof(StackType_t) * intgSTACK_SIZE );
     stackMemSpace[1] = (StackType_t *) pvPortMalloc(sizeof(StackType_t) * intgSTACK_SIZE );
     // internally create structure to collect parameters feeding to task creating function

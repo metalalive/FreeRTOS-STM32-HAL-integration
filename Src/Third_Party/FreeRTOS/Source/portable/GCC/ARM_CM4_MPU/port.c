@@ -111,8 +111,7 @@ StackType_t  *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t p
     // CPU decodes this address, switch (from MSP) to PSP. 
     *pxTopOfStack = portEXPTN_RETURN_TO_TASK;
     pxTopOfStack--;
-    // [TODO]
-    // explain why we keep space for unused R4-R11 
+    // keep space for R4-R11, for consistency 
     pxTopOfStack -= 8;
     // modify privilege bit of CONtrol register before exception return
     //, with MPU enabled, each task has its own privilege attribute

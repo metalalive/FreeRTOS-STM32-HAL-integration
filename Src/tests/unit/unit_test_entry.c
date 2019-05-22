@@ -111,8 +111,6 @@ int main(void)
   // timer interrupt will cause Hardfault error in SVC exception
   // we when perform unit test for FreeRTOS port, we will uncommnet
   // following line of code to figure out the problem later.
-  //// MX_TIM3_Init();
-  //// MX_TIM4_Init();
   /* Enable the TIM2 global Interrupt */
   //// HAL_NVIC_EnableIRQ(TIM2_IRQn); 
   
