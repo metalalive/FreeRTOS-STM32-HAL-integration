@@ -9,7 +9,7 @@ end
 
 define report_test_result
     set print address on
-    set $currTestNode = $arg0
+    set $currTestNode = testloggerlist->head
     set $null         = 0
     set $num_of_tests = 0
     set $num_of_fails = 0
