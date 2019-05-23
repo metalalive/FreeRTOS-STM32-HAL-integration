@@ -2,7 +2,7 @@
 
 STM32CubeMX hasn't supported up-to-date version of FreeRTOS by the time I created this project, therefore I decided to get my hands dirty to work on my FreeRTOS port for STM32F4 Nucleo, which is the development board I worked with in this port.
 
-#### Working environment
+### Working environment
 * STM32F446RE Nucleo development board, 
   * which includes ARM Cortex-M4 MCU, and useful onboard debugger.
 
@@ -22,7 +22,7 @@ STM32CubeMX hasn't supported up-to-date version of FreeRTOS by the time I create
 
 
 
-#### Quick Start
+### Quick Start
 
  Options for building, running, and debugging the image
 
@@ -44,7 +44,7 @@ STM32CubeMX hasn't supported up-to-date version of FreeRTOS by the time I create
    * Launch GDB client to load image, set breakpoints, watchpoints for execution. We use gdb-multiarch   (v7.7.1 or later) at here. 
 
 
-#### Test Report
+### Test Report
 To see the test result, type command `report_test_result` in the GDB client console, you can see number of test cases running on the target board, and how many of them failed. 
 
 For example, the text report below shows that we have 36 test cases and none of the tests failed.
@@ -81,7 +81,7 @@ $25 = 1
 ```
 
 
-#### Code Structure
+### Code Structure
 
 * `./Driver` : contains STM32 HAL C API functions.
 
