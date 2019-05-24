@@ -58,7 +58,7 @@ $6 = "[number of failure]:"
 $7 = 0
 ```
 
-If you get some tests failed, the report also shows where did the assertion failure happen. In the case below, there is one assertion failure at line 28 of the file `sw_timer.c`, the expected value is stored in RAM address `0x200058e0`, similarly the actual value is stored in RAM address `0x200058f8`.
+If you get some tests failed, the report also shows where did the assertion failure happen. In the case below, there is one assertion failure at line 28 of the file `sw_timer.c`, the expected value is stored in RAM address `0x200058e0`, similarly the actual value is stored in RAM address `0x200058f8`, the data type of the expected/actual value depends on what you'd like to check with the test assertion function.
 ```
 $8 = "------- start of error report -------"
 $9 = "[file path]: "
